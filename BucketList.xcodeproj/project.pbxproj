@@ -24,6 +24,7 @@
 		6D8D6212256C65EB007CC02C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6D8D6215256C65EB007CC02C /* BucketList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BucketList.xcdatamodel; sourceTree = "<group>"; };
 		6D8D6217256C65EB007CC02C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D8D621E256DB531007CC02C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +43,7 @@
 			children = (
 				6D8D6208256C65E9007CC02C /* BucketList */,
 				6D8D6207256C65E9007CC02C /* Products */,
+				6D8D621E256DB531007CC02C /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
