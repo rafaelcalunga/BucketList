@@ -12,5 +12,6 @@ I learned how to:
 - Integrate MapKit with SwiftUI
 - Communicate with a MapKit coordinator
 - Use Touch ID and Face ID with SwiftUI
+- Customize MKMapView annotations
 
 This app was made using the course **100 Days of SwiftUI** from [Hacking With Swift](https://www.hackingwithswift.com/100/swiftui/)
