@@ -13,10 +13,11 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State private var centerCoordinate = CLLocationCoordinate2D()
+    @State private var locations = [MKPointAnnotation]()
 
     var body: some View {
         ZStack {
-            MapView(centerCoordinate: $centerCoordinate)
+            MapView(centerCoordinate: $centerCoordinate, annotations: locations)
                 .edgesIgnoringSafeArea(.all)
             
             Circle()
@@ -28,9 +29,7 @@ struct ContentView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Button(action: {
-                        // create a new location
-                    }) {
+                    Button(action: createNewLocation) {
                         Image(systemName: "plus")
                     }
                     .padding()
@@ -42,6 +41,12 @@ struct ContentView: View {
                 }
             }
         }
+    }
+    
+    func createNewLocation() {
+        let newLocation = MKPointAnnotation()
+        newLocation.coordinate = self.centerCoordinate
+        self.locations.append(newLocation)
     }
 }
 
