@@ -13,7 +13,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State private var centerCoordinate = CLLocationCoordinate2D()
-    @State private var locations = [MKPointAnnotation]()
+    @State private var locations = [CodableMKPointAnnotation]()
     @State private var selectedPlace: MKPointAnnotation?
     @State private var showingPlaceDetails = false
     @State private var showingEditScreen = false
@@ -62,7 +62,7 @@ struct ContentView: View {
     }
     
     func createNewLocation() {
-        let newLocation = MKPointAnnotation()
+        let newLocation = CodableMKPointAnnotation()
         newLocation.title = "Example Location"
         newLocation.coordinate = self.centerCoordinate
         self.locations.append(newLocation)
@@ -74,6 +74,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView()
     }
 }
