@@ -7,7 +7,7 @@
 
 import SwiftUI
 import MapKit
-import CoreData
+import LocalAuthentication
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -17,31 +17,44 @@ struct ContentView: View {
     @State private var selectedPlace: MKPointAnnotation?
     @State private var showingPlaceDetails = false
     @State private var showingEditScreen = false
-
+    @State private var isUnlocked = false
+    
     var body: some View {
         ZStack {
-            MapView(centerCoordinate: $centerCoordinate, selectedPlace: $selectedPlace, showingPlaceDetails: $showingPlaceDetails, annotations: locations)
-                .edgesIgnoringSafeArea(.all)
-            
-            Circle()
-                .fill(Color.blue)
-                .opacity(0.3)
-                .frame(width: 32, height: 32)
-            
-            VStack {
-                Spacer()
-                HStack {
+            if isUnlocked {
+                MapView(centerCoordinate: $centerCoordinate, selectedPlace: $selectedPlace, showingPlaceDetails: $showingPlaceDetails, annotations: locations)
+                    .edgesIgnoringSafeArea(.all)
+                
+                Circle()
+                    .fill(Color.blue)
+                    .opacity(0.3)
+                    .frame(width: 32, height: 32)
+                
+                VStack {
                     Spacer()
-                    Button(action: createNewLocation) {
-                        Image(systemName: "plus")
+                    HStack {
+                        Spacer()
+                        Button(action: createNewLocation) {
+                            Image(systemName: "plus")
+                        }
+                        .padding()
+                        .background(Color.black.opacity(0.75))
+                        .foregroundColor(.white)
+                        .font(.title)
+                        .clipShape(Circle())
+                        .padding(.trailing)
                     }
-                    .padding()
-                    .background(Color.black.opacity(0.75))
-                    .foregroundColor(.white)
-                    .font(.title)
-                    .clipShape(Circle())
-                    .padding(.trailing)
                 }
+            } else {
+                Button(action: { self.autenticate() }) {
+                    Image(systemName: "faceid")
+                        .font(.title)
+                    Text("Unlock your Places")
+                }
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .clipShape(Capsule())
             }
         }
         .alert(isPresented: $showingPlaceDetails) {
@@ -95,6 +108,27 @@ struct ContentView: View {
             try data.write(to: filename, options: [.atomicWrite, .completeFileProtection])
         } catch {
             print("Unable to save data.")
+        }
+    }
+    
+    func autenticate() {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "Please authenticate yourself to unlock your places."
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+                DispatchQueue.main.async {
+                    if success {
+                        self.isUnlocked = true
+                    } else {
+                        // error
+                    }
+                }
+            }
+        } else {
+            // no biometrics
         }
     }
 }
