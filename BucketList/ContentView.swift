@@ -36,12 +36,12 @@ struct ContentView: View {
                         Spacer()
                         Button(action: createNewLocation) {
                             Image(systemName: "plus")
+                                .padding()
+                                .background(Color.black.opacity(0.75))
+                                .foregroundColor(.white)
+                                .font(.title)
+                                .clipShape(Circle())
                         }
-                        .padding()
-                        .background(Color.black.opacity(0.75))
-                        .foregroundColor(.white)
-                        .font(.title)
-                        .clipShape(Circle())
                         .padding(.trailing)
                     }
                 }
